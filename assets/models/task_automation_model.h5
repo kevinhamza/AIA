@@ -1,0 +1,36 @@
+import tensorflow as tf
+import numpy as np
+import pyautogui  # Library to automate GUI interactions
+import pyttsx3    # Text-to-speech for feedback
+from keras.models import load_model
+
+# Load the pre-trained task automation model (h5 format)
+task_automation_model = load_model('assets/models/task_automation_model.h5')
+
+# Function to automate tasks based on model prediction
+def automate_task(input_data):
+    # Preprocess the input data (assuming numerical features or image data)
+    # Example: Flatten input data if it's an image or a multi-dimensional array
+    input_data = np.array(input_data).reshape(1, -1)  # Adjust as per input format
+
+    # Predict the task to automate
+    prediction = task_automation_model.predict(input_data)
+    
+    # Example of performing a task based on prediction (let's assume the model predicts task actions)
+    if prediction == 0:
+        pyautogui.press('enter')  # Simulate pressing Enter key
+    elif prediction == 1:
+        pyautogui.hotkey('ctrl', 'c')  # Simulate Ctrl + C
+    elif prediction == 2:
+        pyautogui.hotkey('ctrl', 'v')  # Simulate Ctrl + V
+    else:
+        pyttsx3.speak("Task not recognized")  # Handle unknown predictions
+
+# Function to simulate task input and automate task
+def simulate_task_input():
+    # Example task input data (this would come from sensor input, image processing, or another source)
+    sample_input_data = [0.5, 0.2, 0.8, 1.0]  # Replace with actual input data
+    automate_task(sample_input_data)
+
+# Example usage
+simulate_task_input()
