@@ -1,0 +1,41 @@
+import pickle
+import nltk
+from nltk.tokenize import word_tokenize
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pyttsx3
+
+# Load the NLP model (classification model, for example)
+with open('assets/models/nlp_model.pkl', 'rb') as model_file:
+    nlp_model = pickle.load(model_file)
+
+# Example of how to preprocess text for prediction
+def preprocess_text(text):
+    # Tokenize the text into words
+    tokens = word_tokenize(text)
+    # You can further process tokens like removing stop words, stemming, etc.
+    return ' '.join(tokens)
+
+# Function to predict using the NLP model
+def predict_text_classification(text):
+    # Preprocess the text
+    processed_text = preprocess_text(text)
+    
+    # Transform the text into a feature vector
+    vectorizer = TfidfVectorizer(stop_words='english')
+    text_vectorized = vectorizer.fit_transform([processed_text])
+    
+    # Make prediction using the model
+    prediction = nlp_model.predict(text_vectorized)
+    
+    return prediction
+
+# Function to announce prediction using speech
+def speak_prediction(prediction):
+    engine = pyttsx3.init()
+    engine.say(f"The prediction is: {prediction}")
+    engine.runAndWait()
+
+# Example usage
+input_text = "This is an example input text to classify."
+prediction = predict_text_classification(input_text)
+speak_prediction(prediction)
