@@ -1,0 +1,52 @@
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+import numpy as np
+import librosa
+import pyttsx3
+
+# Load pre-trained voice recognition model
+model = load_model('assets/models/voice_recognition_model.h5')
+
+# Function to preprocess audio
+def preprocess_audio(file_path):
+    # Load audio file using librosa
+    audio, sample_rate = librosa.load(file_path, sr=None)
+    
+    # Extract features (e.g., Mel-frequency cepstral coefficients - MFCC)
+    mfcc = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=13)
+    
+    # Normalize the features
+    mfcc = np.mean(mfcc.T, axis=0)
+    
+    return mfcc
+
+# Function to recognize voice command
+def recognize_command(audio_path):
+    features = preprocess_audio(audio_path)
+    
+    # Reshape for model input
+    features = features.reshape(1, -1)  # Make it compatible with the model
+    
+    # Predict the command
+    prediction = model.predict(features)
+    command = np.argmax(prediction)  # Get the class with highest probability
+    
+    return command
+
+# Function to speak out the recognized command
+def speak_command(command):
+    engine = pyttsx3.init()
+    
+    # Map the command to a speech output
+    if command == 0:
+        engine.say("Turning on the light")
+    elif command == 1:
+        engine.say("Opening the browser")
+    else:
+        engine.say("Command not recognized")
+    
+    engine.runAndWait()
+
+# Example usage
+command = recognize_command('path_to_audio.wav')
+speak_command(command)
