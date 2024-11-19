@@ -1,0 +1,57 @@
+import torch
+import torchvision.transforms as transforms
+from PIL import Image
+import pyttsx3
+
+# Load the pre-trained image recognition model
+model = torch.load('assets/models/image_recognition_model.pth')
+model.eval()  # Set the model to evaluation mode
+
+# Define a function to preprocess images before feeding into the model
+def preprocess_image(image_path):
+    # Load image
+    img = Image.open(image_path)
+    
+    # Define the transformations
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),  # Resize image
+        transforms.ToTensor(),          # Convert image to tensor
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),  # Normalize image
+    ])
+    
+    # Apply the transformations
+    img_tensor = transform(img)
+    
+    # Add batch dimension
+    img_tensor = img_tensor.unsqueeze(0)  # Shape becomes (1, 3, 224, 224)
+    
+    return img_tensor
+
+# Define a function to predict the image content
+def recognize_image(image_path):
+    # Preprocess the image
+    img_tensor = preprocess_image(image_path)
+    
+    # Perform inference
+    with torch.no_grad():  # No need to compute gradients during inference
+        output = model(img_tensor)
+    
+    # Get the predicted class (most likely category)
+    _, predicted_class = torch.max(output, 1)
+    
+    # Map the predicted class index to a label
+    class_labels = ['cat', 'dog', 'car', 'person', 'tree']  # Example labels, you should define your own
+    predicted_label = class_labels[predicted_class.item()]
+    
+    return predicted_label
+
+# Function to announce the result using speech
+def speak_prediction(prediction):
+    engine = pyttsx3.init()
+    engine.say(f"The object in the image is a {prediction}.")
+    engine.runAndWait()
+
+# Example usage
+image_path = 'path_to_image.jpg'  # Provide the path to the image
+prediction = recognize_image(image_path)
+speak_prediction(prediction)
