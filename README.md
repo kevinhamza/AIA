@@ -23,7 +23,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that combines mu
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/kevinhamza/AIA
+    git clone https://github.com/kevinhamza/AIA.git
     cd AIA
     ```
 
