@@ -38,6 +38,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 
 3. Install dependencies:
     ```bash
+    pip install --upgrade pip
     pip install -r requirements.txt
     ```
 4. Install dependencies(if requirement.txt gives error):
