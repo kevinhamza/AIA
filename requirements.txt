@@ -30,7 +30,6 @@ imageio==2.31.1
 
 # Internet Tasks and Web Automation
 requests==2.31.0
-beautifulsoup4==4.13.0
 beautifulsoup4>=4.12.2
 selenium==4.10.0
 
@@ -40,8 +39,8 @@ keyboard==0.13.5
 psutil==5.9.0
 
 # Environment and Configurations
-python-dotenv==1.0.0
-decouple==3.8.0
+python-dotenv>=1.0.0
+decouple==0.0.7
 
 # Logging and Debugging
 loguru==0.7.0
