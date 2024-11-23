@@ -24,22 +24,28 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 
 ### Steps
 
-1. Clone the repository:
+1. Create a New Virtual Environment (if needed):
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+    
+2. Clone the repository:
     ```bash
     git clone https://github.com/kevinhamza/AIA.git
     cd AIA
     ```
 
-2. Install dependencies:
+3. Install dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-2. Install dependencies(if requirement.txt gives error):
+4. Install dependencies(if requirement.txt gives error):
     ```bash
     pip install --use-deprecated=legacy-resolver -r requirements.txt
     ```
 
-3. Set up environment variables:
+5. Set up environment variables:
     - Create a `.env` file with the necessary API keys and configurations for services such as Twitter, Facebook, PimEye-like services, etc.
     - Example `.env` file:
       ```env
@@ -48,7 +54,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
       PIMEYE_API_KEY=your_pimeye_api_key
       ```
 
-4. Run the assistant:
+6. Run the assistant:
     ```bash
     python main.py
     ```
