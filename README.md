@@ -20,6 +20,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 
 - maybe Python <= 3.11.5 if other python version not work 
 - Required libraries and dependencies listed in `requirements.txt`
+- you can also do this if requirements.txt gives error `pip install --use-deprecated=legacy-resolver -r requirements.txt`
 
 ### Steps
 
@@ -32,6 +33,10 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 2. Install dependencies:
     ```bash
     pip install -r requirements.txt
+    ```
+2. Install dependencies(if requirement.txt gives error):
+    ```bash
+    pip install --use-deprecated=legacy-resolver -r requirements.txt
     ```
 
 3. Set up environment variables:
