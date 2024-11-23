@@ -26,7 +26,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 
 1. Create a New Virtual Environment (if needed):
     ```bash
-    python3 -m venv venv
+    python3.11 -m venv venv
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     ```
     
