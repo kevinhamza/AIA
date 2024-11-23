@@ -18,7 +18,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 
 ### Requirements
 
-- Python 3.x
+- maybe Python <= 3.11.5 if other python version not work 
 - Required libraries and dependencies listed in `requirements.txt`
 
 ### Steps
