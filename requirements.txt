@@ -1,12 +1,12 @@
 # Core AI and Machine Learning
-torch>=2.2.0
 transformers==4.33.2
 easyocr==1.7.0
 numpy>=1.22,<=1.24.3
 pandas==2.1.1
 scikit-learn==1.4.0
-typing-extensions>=3.6.6,<4.6.0
-tensorflow==2.13.0
+typing-extensions>=4.8.0
+torch==2.2.0  # Or compatible version
+tensorflow==2.12.0  # If this version supports the required typing-extensions
 dlib==19.24.1  # For advanced face recognition
 
 # Face Detection and Recognition
