@@ -5,6 +5,7 @@ easyocr==1.7.0
 numpy>=1.22,<=1.24.3
 pandas==2.1.1
 scikit-learn==1.4.0
+typing-extensions>=3.6.6,<4.6.0
 tensorflow==2.13.0
 dlib==19.24.1  # For advanced face recognition
 
