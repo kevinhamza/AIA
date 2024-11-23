@@ -44,6 +44,8 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 4. Install dependencies(if requirement.txt gives error):
     ```bash
     pip install --use-deprecated=legacy-resolver -r requirements.txt
+    or
+    pip install --use-feature=2020-resolver -r requirements.txt
     ```
 
 5. Set up environment variables:
