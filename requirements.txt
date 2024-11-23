@@ -50,10 +50,10 @@ matplotlib==3.8.0
 seaborn==0.13.0
 
 # Docker Integration
-docker==6.1.3
+docker>=6.2.0
 
 # Whiterabbit AI Integration
-whiterabbitneo==1.0.0
+# whiterabbitneo==1.0.0 (uncomment it if needed and if it dont cause error)
 
 # Miscellaneous
 Pillow==10.0.0
