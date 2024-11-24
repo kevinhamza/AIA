@@ -26,7 +26,7 @@ class Orchestrator:
         self.device_control = DeviceControl()
         self.social_media_manager = SocialMediaManager()
         self.chatbot = ChatBot(config)
-        self.ml = MachineLearning(config)
+        self.ml = ModelManager(config)
         self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
 
     def execute_voice_command(self, command: str):
