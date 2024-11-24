@@ -21,6 +21,7 @@ class Orchestrator:
         self.logger.setLevel(logging.DEBUG)
 
         # Initialize modules
+        self.modules = {}  # Store modules in a dictionary
         self.voice_assistant = VoiceAssistant(config)
         self.internet_tasks = InternetTasks(config)
         self.device_control = DeviceControl()
@@ -29,6 +30,22 @@ class Orchestrator:
         model_type = config.model_type  # or whichever field holds the model type
         self.ml = ModelManager(model_type=model_type)
         self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
+
+        # Register modules
+        self.register_module("voice_assistant", self.voice_assistant)
+        self.register_module("internet_tasks", self.internet_tasks)
+        self.register_module("device_control", self.device_control)
+        self.register_module("social_media_manager", self.social_media_manager)
+        self.register_module("chatbot", self.chatbot)
+        self.register_module("ml", self.ml)
+        self.register_module("error_handler", self.error_handler)
+
+    def register_module(self, module_name: str, module_object):
+        """
+        Registers a module by adding it to the orchestrator's modules dictionary.
+        """
+        self.modules[module_name] = module_object
+        self.logger.info(f"Module '{module_name}' registered successfully.")
 
     def execute_voice_command(self, command: str):
         """
