@@ -1,25 +1,20 @@
+import os
 import requests
 import json
-import os
 from config.social_media_keys import SocialMediaKeys
 
 class SocialMediaManager:
     def __init__(self, config=None):
-        # If config is passed, use it, otherwise use default keys
-        self.config = config
-        
-        if self.config:
-            self.twitter_keys = self.config.get("twitter", {})
-            self.facebook_keys = self.config.get("facebook", {})
+        # Ensure config is passed and has necessary attributes
+        if config:
+            self.config = config
         else:
-            # Access keys using the get_keys() method when no config is provided
-            self.twitter_keys = SocialMediaKeys.get_keys("twitter")
-            self.facebook_keys = SocialMediaKeys.get_keys("facebook")
+            # Fallback to hardcoded keys if no config is provided
+            self.config = {}
 
-        # You can also retrieve specific keys if needed:
-        self.twitter_api_key = self.twitter_keys.get("api_key", "")
-        self.facebook_api_key = self.facebook_keys.get("access_token", "")
-
+        self.twitter_api_key = self.config.get("twitter", {}).get("api_key", "default_twitter_api_key")
+        self.facebook_api_key = self.config.get("facebook", {}).get("access_token", "default_facebook_access_token")
+        
     def post_to_twitter(self, message):
         url = f"https://api.twitter.com/2/tweets"
         headers = {
@@ -75,12 +70,10 @@ class SocialMediaManager:
             print("Invalid platform specified.")
 
 if __name__ == "__main__":
-    # Example configuration (replace this with your actual config or environment variables)
-    config = {
+    # Example of initializing with a config
+    smm = SocialMediaManager(config={
         "twitter": {"api_key": "your_twitter_api_key"},
         "facebook": {"access_token": "your_facebook_access_token"}
-    }
-    
-    smm = SocialMediaManager(config=config)
+    })
     smm.post_to_twitter("Hello from my assistant!")
     smm.get_latest_posts("twitter")
