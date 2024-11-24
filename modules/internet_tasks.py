@@ -5,7 +5,7 @@ import os
 from config.apis import APIKeys  # Import the APIKeys class
 
 class InternetTasks:
-    def __init__(self):
+    def __init__(self, config=None):
         # Create an instance of APIKeys to access the keys
         api_keys = APIKeys()
         self.weather_api_key = api_keys.get_weather_api_key()  # Use the getter method
