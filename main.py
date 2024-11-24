@@ -5,7 +5,7 @@ from config.settings import load_config
 from modules.voice_assistant import VoiceAssistant
 from modules.chatbot import ChatBot
 from modules.social_media import SocialMediaManager
-from modules.internet_tasks import InternetTaskManager
+from modules.internet_tasks import InternetTasks
 from modules.face_detection import FaceDetection
 from modules.face_recognition import FaceRecognition
 from modules.data_retrieval import DataRetrievalEngine
