@@ -88,7 +88,7 @@ def load_config():
     """
     Returns the Settings class with all configurations.
     """
-    return Settings
+    return Config
 
 
 # Example usage
