@@ -14,6 +14,7 @@ from modules.device_control import DeviceControl
 from modules.machine_learning import ModelManager
 from modules.pimeye_integration import PimEyeIntegration
 from apis.whiterabbit import WhiteRabbitAI
+from config.settings import Config
 
 # Setup logging
 logging.basicConfig(
