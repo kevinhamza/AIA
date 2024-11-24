@@ -10,7 +10,7 @@ class Config:
     """
 
     model_type = 'random_forest'  # or another supported type
-    
+
     # General Settings
     APP_NAME = "AIA - All-In-One Assistant"
     DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"
@@ -83,7 +83,7 @@ class Config:
         """
         Utility method to fetch a configuration setting dynamically.
         """
-        return getattr(Settings, key, default_value)
+        return getattr(Config, key, default_value)
 
 
 def load_config():
