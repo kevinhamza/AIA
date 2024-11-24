@@ -9,6 +9,8 @@ class Config:
     A class to store all configuration settings for the project.
     """
 
+    model_type = 'random_forest'  # or another supported type
+    
     # General Settings
     APP_NAME = "AIA - All-In-One Assistant"
     DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"
