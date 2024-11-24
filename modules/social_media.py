@@ -5,13 +5,10 @@ from config.social_media_keys import SocialMediaKeys
 
 class SocialMediaManager:
     def __init__(self, config=None):
-        # Ensure config is passed and has necessary attributes
-        if config:
-            self.config = config
-        else:
-            # Fallback to hardcoded keys if no config is provided
-            self.config = {}
+        # Ensure config is passed and has necessary attributes, fallback to hardcoded keys if no config is provided
+        self.config = config if config else {}
 
+        # Access Twitter and Facebook API keys from the config or fallback to default values
         self.twitter_api_key = self.config.get("twitter", {}).get("api_key", "default_twitter_api_key")
         self.facebook_api_key = self.config.get("facebook", {}).get("access_token", "default_facebook_access_token")
         
