@@ -2,12 +2,12 @@ import pyautogui
 import os
 import subprocess
 import time
-from win32api import GetSystemMetrics
+import platform
 import psutil
 
 class DeviceControl:
     def __init__(self):
-        pass
+        self.os_name = platform.system()
 
     def move_mouse(self, x, y):
         """Move the mouse to a specific position"""
@@ -27,18 +27,35 @@ class DeviceControl:
         screenshot.save(save_path)
 
     def open_application(self, app_name):
-        """Open an application by name (Windows-specific)"""
+        """Open an application by name"""
         try:
-            subprocess.run([app_name], check=True)
+            if self.os_name == "Windows":
+                subprocess.run([app_name], check=True)
+            elif self.os_name == "Linux":
+                subprocess.run(["xdg-open", app_name], check=True)
+            elif self.os_name == "Darwin":  # macOS
+                subprocess.run(["open", app_name], check=True)
             print(f"{app_name} opened successfully.")
-        except subprocess.CalledProcessError as e:
+        except Exception as e:
             print(f"Error opening {app_name}: {e}")
 
     def get_system_metrics(self):
         """Get screen width and height"""
-        screen_width = GetSystemMetrics(0)
-        screen_height = GetSystemMetrics(1)
-        return screen_width, screen_height
+        if self.os_name == "Windows":
+            try:
+                from win32api import GetSystemMetrics
+                screen_width = GetSystemMetrics(0)
+                screen_height = GetSystemMetrics(1)
+                return screen_width, screen_height
+            except ImportError:
+                print("win32api is not available on this system.")
+        else:
+            try:
+                screen_width, screen_height = pyautogui.size()
+                return screen_width, screen_height
+            except Exception as e:
+                print(f"Error retrieving screen size: {e}")
+        return None, None
 
     def close_application(self, app_name):
         """Close an application by its name"""
@@ -53,15 +70,30 @@ class DeviceControl:
 
     def shutdown_system(self):
         """Shut down the computer"""
-        os.system("shutdown /s /t 1")
+        if self.os_name == "Windows":
+            os.system("shutdown /s /t 1")
+        elif self.os_name == "Linux":
+            os.system("shutdown now")
+        elif self.os_name == "Darwin":
+            os.system("sudo shutdown -h now")
 
     def restart_system(self):
         """Restart the computer"""
-        os.system("shutdown /r /t 1")
+        if self.os_name == "Windows":
+            os.system("shutdown /r /t 1")
+        elif self.os_name == "Linux":
+            os.system("reboot")
+        elif self.os_name == "Darwin":
+            os.system("sudo shutdown -r now")
 
     def lock_system(self):
         """Lock the computer"""
-        os.system("rundll32.exe user32.dll,LockWorkStation")
+        if self.os_name == "Windows":
+            os.system("rundll32.exe user32.dll,LockWorkStation")
+        elif self.os_name == "Linux":
+            os.system("gnome-screensaver-command -l")
+        elif self.os_name == "Darwin":
+            os.system("/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession -suspend")
 
 if __name__ == "__main__":
     device_control = DeviceControl()
@@ -69,7 +101,6 @@ if __name__ == "__main__":
     device_control.click(100, 100)
     device_control.scroll("up", 5)
     device_control.screenshot("screenshot_test.png")
-    device_control.open_application("notepad")
+    device_control.open_application("notepad" if platform.system() == "Windows" else "gedit")
     time.sleep(2)
-    device_control.close_application("notepad")
-    device_control.shutdown_system()
+    device_control.close_application("notepad" if platform.system() == "Windows" else "gedit")
