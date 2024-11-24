@@ -6,8 +6,9 @@ from modules.device_control import DeviceControl
 from modules.social_media import SocialMediaManager
 from modules.chatbot import ChatBot
 from modules.machine_learning import MachineLearning
-from modules.error_handling import ErrorHandler
+from modules.error_handling import ErrorLogger
 from config.settings import Config
+
 
 class Orchestrator:
     """
@@ -19,14 +20,14 @@ class Orchestrator:
         self.logger = logging.getLogger("Orchestrator")
         self.logger.setLevel(logging.DEBUG)
 
-        # Initializing modules
+        # Initialize modules
         self.voice_assistant = VoiceAssistant(config)
         self.internet_tasks = InternetTasks(config)
         self.device_control = DeviceControl()
         self.social_media_manager = SocialMediaManager()
         self.chatbot = ChatBot(config)
         self.ml = MachineLearning(config)
-        self.error_handler = ErrorHandler()
+        self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
 
     def execute_voice_command(self, command: str):
         """
@@ -58,7 +59,8 @@ class Orchestrator:
             else:
                 self.logger.warning(f"Unknown command: {command}")
         except Exception as e:
-            self.error_handler.handle_exception(e)
+            error_message = self.error_handler.handle_exception(e, "Error in execute_voice_command")
+            self.logger.error(error_message)
 
     def monitor_system(self):
         """
@@ -87,7 +89,8 @@ class Orchestrator:
                 self.shutdown()
                 break
             except Exception as e:
-                self.error_handler.handle_exception(e)
+                error_message = self.error_handler.handle_exception(e, "Error in orchestrator.run")
+                self.logger.error(error_message)
 
     def shutdown(self):
         """
@@ -97,6 +100,7 @@ class Orchestrator:
         self.voice_assistant.stop_listening()
         self.device_control.shutdown_system()
         self.logger.info("Orchestrator shut down successfully.")
+
 
 # Example usage:
 if __name__ == "__main__":
