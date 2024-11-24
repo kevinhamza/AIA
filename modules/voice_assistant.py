@@ -5,12 +5,12 @@ import speech_recognition as sr
 from modules.error_handling import ErrorLogger
 from modules.internet_tasks import InternetTasks
 
-
 class VoiceAssistant:
     """
     Voice Assistant for interaction with the user via voice commands.
     """
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.speech_engine = pyttsx3.init()
         self.speech_engine.setProperty("rate", 150)
         self.speech_engine.setProperty("volume", 0.9)
@@ -117,8 +117,7 @@ class VoiceAssistant:
                 self.error_logger.log_error("[VoiceAssistant][start]", str(e))
                 self.speak("An error occurred in the main loop.")
 
-
 # Example usage:
 # if __name__ == "__main__":
-#     assistant = VoiceAssistant()
+#     assistant = VoiceAssistant(config)
 #     assistant.start()
