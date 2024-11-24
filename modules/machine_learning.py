@@ -4,6 +4,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
 class ModelManager:
@@ -12,10 +14,15 @@ class ModelManager:
         self.model = self._initialize_model()
 
     def _initialize_model(self):
+        """Initialize model based on the model_type"""
         if self.model_type == 'random_forest':
             return RandomForestClassifier(n_estimators=100, random_state=42)
+        elif self.model_type == 'logistic_regression':
+            return LogisticRegression(random_state=42)
+        elif self.model_type == 'decision_tree':
+            return DecisionTreeClassifier(random_state=42)
         else:
-            raise ValueError("Model type not supported")
+            raise ValueError(f"Model type '{self.model_type}' not supported. Supported types: 'random_forest', 'logistic_regression', 'decision_tree'.")
 
     def load_data(self, filepath):
         """Load dataset from CSV file"""
@@ -53,7 +60,7 @@ class ModelManager:
         self.model = joblib.load(model_filepath)
 
 if __name__ == "__main__":
-    ml = ModelManager()
+    ml = ModelManager(model_type='logistic_regression')  # Change model type if needed
     
     # Load data
     data = ml.load_data('path_to_data.csv')
@@ -71,4 +78,4 @@ if __name__ == "__main__":
     print(f"Classification Report:\n{report}")
     
     # Save the model
-    ml.save_model('random_forest_model.joblib')
+    ml.save_model('model.joblib')
