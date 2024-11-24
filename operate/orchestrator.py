@@ -3,7 +3,7 @@ import time
 from modules.voice_assistant import VoiceAssistant
 from modules.internet_tasks import InternetTasks
 from modules.device_control import DeviceControl
-from modules.social_media import SocialMedia
+from modules.social_media import SocialMediaManager
 from modules.chatbot import ChatBot
 from modules.machine_learning import MachineLearning
 from modules.error_handling import ErrorHandler
@@ -22,8 +22,8 @@ class Orchestrator:
         # Initializing modules
         self.voice_assistant = VoiceAssistant(config)
         self.internet_tasks = InternetTasks(config)
-        self.device_control = DeviceControl(config)
-        self.social_media = SocialMedia(config)
+        self.device_control = DeviceControl()
+        self.social_media_manager = SocialMediaManager()
         self.chatbot = ChatBot(config)
         self.ml = MachineLearning(config)
         self.error_handler = ErrorHandler()
@@ -41,17 +41,24 @@ class Orchestrator:
                 self.internet_tasks.get_news()
             elif "control" in command:
                 self.logger.info("Controlling devices.")
-                self.device_control.control_device(command)
+                self.device_control.move_mouse(100, 100)  # Example action
             elif "social" in command:
                 self.logger.info("Interacting with social media.")
-                self.social_media.perform_task(command)
+                if "post to twitter" in command:
+                    self.social_media_manager.post_to_twitter("Automated post!")
+                elif "fetch twitter posts" in command:
+                    self.social_media_manager.get_latest_posts("twitter")
+                elif "post to facebook" in command:
+                    self.social_media_manager.post_to_facebook("Automated post!")
+                else:
+                    self.logger.warning("Unknown social media command.")
             elif "chat" in command:
                 self.logger.info("Chatbot initiated.")
                 self.chatbot.start_chatbot(command)
             else:
                 self.logger.warning(f"Unknown command: {command}")
         except Exception as e:
-            self.error_handler.log_error(f"Error executing voice command: {e}")
+            self.error_handler.handle_exception(e)
 
     def monitor_system(self):
         """
@@ -70,11 +77,17 @@ class Orchestrator:
         """
         self.logger.info("Starting Orchestrator...")
         while True:
-            # For testing, simulate receiving a voice command
-            command = self.voice_assistant.listen_for_command()
-            if command:
-                self.logger.info(f"Received command: {command}")
-                self.execute_voice_command(command)
+            try:
+                # Simulate receiving a voice command for testing
+                command = self.voice_assistant.listen_for_command()
+                if command:
+                    self.logger.info(f"Received command: {command}")
+                    self.execute_voice_command(command)
+            except KeyboardInterrupt:
+                self.shutdown()
+                break
+            except Exception as e:
+                self.error_handler.handle_exception(e)
 
     def shutdown(self):
         """
@@ -82,7 +95,7 @@ class Orchestrator:
         """
         self.logger.info("Shutting down orchestrator...")
         self.voice_assistant.stop_listening()
-        self.device_control.shutdown_devices()
+        self.device_control.shutdown_system()
         self.logger.info("Orchestrator shut down successfully.")
 
 # Example usage:
