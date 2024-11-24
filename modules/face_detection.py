@@ -3,7 +3,7 @@ import face_recognition
 import numpy as np
 import os
 from modules.social_media_api import SocialMediaAPI
-from modules.error_handling import ErrorHandling
+from modules.error_handling import ErrorLogger
 
 class FaceDetection:
     """
