@@ -1,8 +1,7 @@
 import cv2
 import face_recognition
 import numpy as np
-import requests
-from modules.error_handling import ErrorHandling
+from modules.error_handling import ErrorLogger
 from config.social_media_keys import (
     FACEBOOK_API_KEY,
     TWITTER_API_KEY,
