@@ -1,12 +1,17 @@
 import requests
 import json
 import os
-from config.social_media_keys import TWITTER_API_KEY, FACEBOOK_API_KEY
+from config.social_media_keys import SocialMediaKeys
 
 class SocialMediaManager:
     def __init__(self):
-        self.twitter_api_key = TWITTER_API_KEY
-        self.facebook_api_key = FACEBOOK_API_KEY
+        # Access keys using the get_keys() method
+        self.twitter_keys = SocialMediaKeys.get_keys("twitter")
+        self.facebook_keys = SocialMediaKeys.get_keys("facebook")
+        
+        # You can also retrieve specific keys if needed:
+        self.twitter_api_key = self.twitter_keys["api_key"]
+        self.facebook_api_key = self.facebook_keys["access_token"]
 
     def post_to_twitter(self, message):
         url = f"https://api.twitter.com/2/tweets"
