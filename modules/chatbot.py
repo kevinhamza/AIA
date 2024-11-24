@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-class Chatbot:
+class ChatBot:
     def __init__(self, model='gpt-3.5-turbo', api_key=None):
         """
         Initialize the Chatbot with OpenAI's model.
