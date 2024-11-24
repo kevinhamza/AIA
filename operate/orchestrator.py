@@ -5,7 +5,7 @@ from modules.internet_tasks import InternetTasks
 from modules.device_control import DeviceControl
 from modules.social_media import SocialMediaManager
 from modules.chatbot import ChatBot
-from modules.machine_learning import MachineLearning
+from modules.machine_learning import ModelManager
 from modules.error_handling import ErrorLogger
 from config.settings import Config
 
