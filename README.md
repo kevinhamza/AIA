@@ -83,3 +83,91 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [WhiteRabbit AI API](https://www.whiterabbitneo.com/)
 - [Social Media API Integration](https://github.com/some-repo)
 - [PimEye](https://pimeye.com/) (for real-time facial recognition and image search)
+
+
+
+
+# AIA Project - Running Locally on Mobile  
+
+This guide explains how to run the AIA project locally on a mobile device using Python. The setup is optimized for Android devices using **Termux** or **Pydroid 3**.  
+
+---
+
+## Prerequisites  
+
+### For Android  
+1. **Python Environment**  
+   - Install **Termux** from [F-Droid](https://f-droid.org/) (recommended) or **Pydroid 3** from the Google Play Store.  
+
+2. **Project Files**  
+   - Ensure the following files are available:  
+     - `main.py`  
+     - `requirements.txt`  
+     - Other necessary directories like `config/`, `modules/`, etc.  
+
+---
+
+## Setup Python Environment  
+
+### Using Termux  
+
+    pkg update && pkg upgrade  
+    pkg install python python-pip  
+### Using Pydroid 3
+    Open Pydroid 3.
+    Use its built-in package manager to install Python and pip.
+    Transfer Project Files
+
+## Copy the project files to your mobile device:
+## Use USB transfer or cloud storage like Google Drive.
+## Place them in a directory, e.g., /storage/emulated/0/AIA/.
+Install Dependencies
+
+
+#### Edit `requirements.txt` to modify dependencies for mobile compatibility:
+#### torch-mobile>=1.10.0  
+#### tensorflow-lite>=2.5.0  
+
+    pip install -r requirements.txt  
+    Adjust Code for Mobile
+    File Path Adjustments
+
+
+# Update file paths to be compatible with mobile systems:
+
+    import os
+    BASE_DIR = os.path.expanduser("~/AIA/")
+    config_path = os.path.join(BASE_DIR, "config.json")
+    Disable Non-Essential Modules
+
+### Comment out or disable modules that require significant resources 
+### (e.g., advanced ML models).
+##Execute the Project
+
+# Navigate to the project directory:
+    cd ~/AIA/
+
+# Run the project:
+    python main.py  
+    Optional: Add a GUI
+
+# For a mobile-friendly interface, install Kivy:
+     pip install kivy
+
+# Update the project to include Kivy-based screens for user interactions.
+    Limitations
+    Performance
+
+## Mobile devices may struggle with resource-intensive tasks.
+
+## Use lightweight models (e.g., TensorFlow Lite, ONNX).
+    Storage
+
+## Ensure adequate space for dependencies and project files.
+    Compatibility
+
+## Not all Python libraries work on mobile. Test dependencies individually.
+   -Next Steps
+
+### Optimize models for mobile using TensorFlow Lite or PyTorch Mobile.
+### Explore adding advanced mobile-specific features like notifications or camera access.
