@@ -57,7 +57,13 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
       PIMEYE_API_KEY=your_pimeye_api_key
       ```
 
-6. Run the assistant:
+6. Run the following command to install `espeak` (if you using Linux):
+    ```bash
+    sudo apt-get update
+   sudo apt-get install espeak
+    ```
+
+7. Run the assistant:
     ```bash
     python main.py
     ```
