@@ -2,13 +2,8 @@ import cv2
 import face_recognition
 import numpy as np
 from modules.error_handling import ErrorLogger
-from config.social_media_keys import (
-    FACEBOOK_API_KEY,
-    TWITTER_API_KEY,
-    LINKEDIN_API_KEY,
-    INSTAGRAM_API_KEY,
-)
-from modules.pimeye_integration import PimEyeSearch
+from config.social_media_keys import SocialMediaKeys
+from modules.pimeye_integration import PimEyeIntegration
 
 
 class FaceRecognitionSystem:
