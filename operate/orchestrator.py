@@ -26,7 +26,7 @@ class Orchestrator:
         self.internet_tasks = InternetTasks(config)
         self.device_control = DeviceControl()
         self.social_media_manager = SocialMediaManager()
-        self.chatbot = ChatBot(config)
+        self.chatbot = ChatBot()
         model_type = config.model_type  # or whichever field holds the model type
         self.ml = ModelManager(model_type=model_type)
         self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
