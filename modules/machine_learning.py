@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-class MachineLearning:
+class ModelManager:
     def __init__(self, model_type='random_forest'):
         self.model_type = model_type
         self.model = self._initialize_model()
@@ -53,7 +53,7 @@ class MachineLearning:
         self.model = joblib.load(model_filepath)
 
 if __name__ == "__main__":
-    ml = MachineLearning()
+    ml = ModelManager()
     
     # Load data
     data = ml.load_data('path_to_data.csv')
