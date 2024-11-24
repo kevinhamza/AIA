@@ -2,12 +2,14 @@ import requests
 from datetime import datetime
 import json
 import os
-from config.apis import WEATHER_API_KEY, NEWS_API_KEY
+from config.apis import APIKeys  # Import the APIKeys class
 
 class InternetTasks:
     def __init__(self):
-        self.weather_api_key = WEATHER_API_KEY
-        self.news_api_key = NEWS_API_KEY
+        # Create an instance of APIKeys to access the keys
+        api_keys = APIKeys()
+        self.weather_api_key = api_keys.get_weather_api_key()  # Use the getter method
+        self.news_api_key = api_keys.get_news_api_key()  # Use the getter method
 
     def get_weather(self, location):
         url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={self.weather_api_key}&units=metric"
