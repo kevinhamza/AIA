@@ -173,7 +173,7 @@ def main():
     orchestrator.register_module("voice_assistant", voice_assistant)
     
     # Initialize chatbot
-    chatbot = ChatBot(config=config)
+    chatbot = ChatBot()
     orchestrator.register_module("chatbot", chatbot)
     
     # Initialize social media manager
