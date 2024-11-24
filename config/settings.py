@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-class Settings:
+class Config:
     """
     A class to store all configuration settings for the project.
     """
