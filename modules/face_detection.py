@@ -2,7 +2,7 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-from social_media_api import SocialMediaSearch
+from modules.social_media_api import SocialMediaAPI
 from modules.error_handling import ErrorHandling
 
 class FaceDetection:
