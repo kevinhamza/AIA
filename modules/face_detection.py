@@ -18,7 +18,7 @@ class FaceDetection:
         """
         self.known_faces = []
         self.known_names = []
-        self.error_handler = ErrorHandling()
+        self.error_handler = ErrorLogger()
 
         # Load pre-known faces
         if os.path.exists(known_faces_dir):
