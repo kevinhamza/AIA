@@ -5,6 +5,7 @@ import speech_recognition as sr
 from modules.error_handling import ErrorLogger
 from modules.internet_tasks import InternetTasks
 
+
 class VoiceAssistant:
     """
     Voice Assistant for interaction with the user via voice commands.
@@ -84,7 +85,8 @@ class VoiceAssistant:
         except Exception as e:
             self.error_logger.log_error("[VoiceAssistant][handle_news_request]", str(e))
             self.speak("I couldn't fetch the news headlines.")
-          def tell_time(self):
+
+    def tell_time(self):
         """
         Tells the current time.
         """
@@ -114,6 +116,7 @@ class VoiceAssistant:
             except Exception as e:
                 self.error_logger.log_error("[VoiceAssistant][start]", str(e))
                 self.speak("An error occurred in the main loop.")
+
 
 # Example usage:
 # if __name__ == "__main__":
