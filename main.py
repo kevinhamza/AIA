@@ -7,7 +7,7 @@ from modules.chatbot import ChatBot
 from modules.social_media import SocialMediaManager
 from modules.internet_tasks import InternetTasks
 from modules.face_detection import FaceDetection
-from modules.face_recognition import FaceRecognition
+from modules.face_recognition import FaceRecognitionSystem
 from modules.data_retrieval import DataRetrievalEngine
 from operate.orchestrator import Orchestrator
 from modules.device_control import DeviceControl
