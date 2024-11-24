@@ -2,7 +2,7 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-from modules.social_media_api import SocialMediaAPI
+from modules.social_media_search import SocialMediaSearch  # Correct import for SocialMediaSearch
 from modules.error_handling import ErrorLogger
 
 class FaceDetection:
@@ -27,7 +27,7 @@ class FaceDetection:
             os.makedirs(known_faces_dir, exist_ok=True)
 
         self.tolerance = tolerance
-        self.social_search = SocialMediaSearch()
+        self.social_search = SocialMediaSearch()  # Initialize SocialMediaSearch class
 
     def load_known_faces(self, directory):
         """
@@ -47,7 +47,7 @@ class FaceDetection:
                         f"Failed to load face encoding for {filename}: {e}"
                     )
 
-    def detect_and_identify(self, video_source=0):
+    def detect_and_identify(self, video_source="ka.mp4"):
         """
         Perform real-time face detection and identification.
         :param video_source: Video source (0 for webcam, or path to video file).
@@ -95,8 +95,7 @@ class FaceDetection:
         :return: A dictionary of social media details.
         """
         try:
-            # Placeholder for actual implementation
-            return self.social_search.search_by_face(face_encoding)
+            return self.social_search.search_by_face(face_encoding)  # Use SocialMediaSearch to find info
         except Exception as e:
             self.error_handler.handle_exception(e, "Error in social media search.")
             return {}
