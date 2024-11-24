@@ -83,11 +83,20 @@ class Settings:
         """
         return getattr(Settings, key, default_value)
 
+
+def load_config():
+    """
+    Returns the Settings class with all configurations.
+    """
+    return Settings
+
+
 # Example usage
 if __name__ == "__main__":
-    print(f"App Name: {Settings.APP_NAME}")
-    print(f"Debug Mode: {Settings.DEBUG_MODE}")
-    print(f"Log Level: {Settings.LOG_LEVEL}")
-    print(f"OpenAI API Key: {Settings.OPENAI_API_KEY}")
-    print(f"Social Media Enabled: {Settings.SOCIAL_MEDIA_ENABLED}")
-    print(f"Allowed Platforms: {Settings.ALLOWED_SOCIAL_PLATFORMS}")
+    config = load_config()
+    print(f"App Name: {config.APP_NAME}")
+    print(f"Debug Mode: {config.DEBUG_MODE}")
+    print(f"Log Level: {config.LOG_LEVEL}")
+    print(f"OpenAI API Key: {config.OPENAI_API_KEY}")
+    print(f"Social Media Enabled: {config.SOCIAL_MEDIA_ENABLED}")
+    print(f"Allowed Platforms: {config.ALLOWED_SOCIAL_PLATFORMS}")
