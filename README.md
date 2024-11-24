@@ -85,8 +85,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [PimEye](https://pimeye.com/) (for real-time facial recognition and image search)
 
 
-
-
 # AIA Project - Running Locally on Mobile  
 
 This guide explains how to run the AIA project locally on a mobile device using Python. The setup is optimized for Android devices using **Termux** or **Pydroid 3**.  
@@ -110,64 +108,73 @@ This guide explains how to run the AIA project locally on a mobile device using 
 ## Setup Python Environment  
 
 ### Using Termux  
-
     pkg update && pkg upgrade  
-    pkg install python python-pip  
-### Using Pydroid 3
-    Open Pydroid 3.
-    Use its built-in package manager to install Python and pip.
-    Transfer Project Files
+    pkg install python python-pip
 
-## Copy the project files to your mobile device:
-## Use USB transfer or cloud storage like Google Drive.
-## Place them in a directory, e.g., /storage/emulated/0/AIA/.
-Install Dependencies
+### Using Pydroid 3 
+2. **Open Pydroid 3.**
+3. **Use its built-in package manager to install Python and pip.**
 
+### Transfer Project Files
 
-#### Edit `requirements.txt` to modify dependencies for mobile compatibility:
-#### torch-mobile>=1.10.0  
-#### tensorflow-lite>=2.5.0  
+    Copy the project files to your mobile device:
+    # Use USB transfer or cloud storage like Google Drive.
+    # Place them in a directory, e.g., /storage/emulated/0/AIA/.
 
-    pip install -r requirements.txt  
-    Adjust Code for Mobile
-    File Path Adjustments
+### Install Dependencies
 
+- Edit `requirements.txt` to modify dependencies for mobile compatibility:
 
-# Update file paths to be compatible with mobile systems:
+      torch-mobile>=1.10.0  
+      tensorflow-lite>=2.5.0
 
-    import os
-    BASE_DIR = os.path.expanduser("~/AIA/")
-    config_path = os.path.join(BASE_DIR, "config.json")
-    Disable Non-Essential Modules
+  ### Install Dependencies
 
-### Comment out or disable modules that require significant resources 
-### (e.g., advanced ML models).
-##Execute the Project
+  - Run the following command in Termux or Pydroid 3:
 
-# Navigate to the project directory:
-    cd ~/AIA/
+        pip install -r requirements.txt
 
-# Run the project:
-    python main.py  
-    Optional: Add a GUI
+### Adjust Code for Mobile
+- **File Path Adjustments**
+- Update file paths to be compatible with mobile systems:
 
-# For a mobile-friendly interface, install Kivy:
-     pip install kivy
+      import os
+      BASE_DIR = os.path.expanduser("~/AIA/")
+      config_path = os.path.join(BASE_DIR, "config.json")
 
-# Update the project to include Kivy-based screens for user interactions.
-    Limitations
-    Performance
+  ### Disable Non-Essential Modules
+  - Comment out or disable modules that require significant resources (e.g., advanced ML models).
+ 
+  ### Execute the Project
+  - Navigate to the project directory:
+  
+        cd ~/AIA/
 
-## Mobile devices may struggle with resource-intensive tasks.
+  - Run the project:
 
-## Use lightweight models (e.g., TensorFlow Lite, ONNX).
-    Storage
+        python main.py
 
-## Ensure adequate space for dependencies and project files.
-    Compatibility
+### Optional: Add a GUI
 
-## Not all Python libraries work on mobile. Test dependencies individually.
-   -Next Steps
+- For a mobile-friendly interface, install Kivy:
 
-### Optimize models for mobile using TensorFlow Lite or PyTorch Mobile.
-### Explore adding advanced mobile-specific features like notifications or camera access.
+      pip install kivy
+
+- Update the project to include Kivy-based screens for user interactions.
+
+### Limitations
+
+- **Performance**
+   - *Mobile devices may struggle with resource-intensive tasks.*
+   - *Use lightweight models (e.g., TensorFlow Lite, ONNX).*
+ 
+- **Storage**
+    - *Ensure adequate space for dependencies and project files.*
+ 
+- **Compatibility**
+    - *Not all Python libraries work on mobile. Test dependencies individually.*
+ 
+### Next Steps
+
+- Optimize models for mobile using TensorFlow Lite or PyTorch Mobile.
+- Explore adding advanced mobile-specific features like notifications or camera access.
