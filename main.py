@@ -181,7 +181,7 @@ def main():
     orchestrator.register_module("social_media", social_media_manager)
     
     # Initialize internet tasks manager
-    internet_task_manager = InternetTaskManager(config=config)
+    internet_task_manager = InternetTasks(config=config)
     orchestrator.register_module("internet_tasks", internet_task_manager)
     
     # Initialize additional modules
