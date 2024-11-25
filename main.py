@@ -7,7 +7,7 @@ from modules.chatbot import ChatBot
 from modules.social_media import SocialMediaManager
 from modules.internet_tasks import InternetTasks
 from modules.face_detection import FaceDetection
-from modules.face_recognition import FaceRecognitionSystem
+from modules.face_recognition import FaceRecognition
 from modules.data_retrieval import DataRetrievalEngine
 from operate.orchestrator import Orchestrator
 from modules.device_control import DeviceControl
@@ -41,7 +41,7 @@ def initialize_modules(orchestrator, config):
     
     try:
         # Machine Learning Manager
-        model_manager = ModelManager(config=config)
+        model_manager = ModelManager()
         orchestrator.register_module("model_manager", model_manager)
         logger.info("Machine Learning module initialized.")
     except Exception as e:
