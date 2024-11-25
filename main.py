@@ -41,7 +41,7 @@ def initialize_modules(orchestrator, config):
     
     try:
         # Machine Learning Manager
-        model_manager = ModelManager()
+        model_manager = ModelManager(model_type=config.get_model_config("MODEL_TYPE"))
         orchestrator.register_module("model_manager", model_manager)
         logger.info("Machine Learning module initialized.")
     except Exception as e:
@@ -49,7 +49,8 @@ def initialize_modules(orchestrator, config):
     
     try:
         # PimEye Integration
-        pimeye = PimEyeIntegration(api_key=config["pimeye_api_key"])
+        pimeye_api_key = config["pimeye_api_key"]
+        pimeye = PimEyeIntegration(api_key=pimeye_api_key)
         orchestrator.register_module("pimeye_integration", pimeye)
         logger.info("PimEye integration initialized.")
     except Exception as e:
@@ -57,7 +58,9 @@ def initialize_modules(orchestrator, config):
 
     try:
         # Face Detection Module
-        face_detection = FaceDetection(config=config)
+        face_detection_model_path = config.get_model_config("face_detection_model_path")
+        face_detection_threshold = config.get_model_config("detection_threshold")
+        face_detection = FaceDetection(model_path=face_detection_model_path, threshold=face_detection_threshold)
         orchestrator.register_module("face_detection", face_detection)
         logger.info("Face Detection module initialized.")
     except Exception as e:
@@ -65,7 +68,8 @@ def initialize_modules(orchestrator, config):
     
     try:
         # Face Recognition Module
-        face_recognition = FaceRecognitionSystem(config=config)
+        face_recognition_model_path = config.get_model_config("face_recognition_model_path")
+        face_recognition = FaceRecognitionSystem(model_path=face_recognition_model_path)
         orchestrator.register_module("face_recognition", face_recognition)
         logger.info("Face Recognition module initialized.")
     except Exception as e:
@@ -73,7 +77,8 @@ def initialize_modules(orchestrator, config):
     
     try:
         # Data Retrieval Engine
-        data_engine = DataRetrievalEngine(config=config)
+        data_sources = config.get_model_config("data_sources")
+        data_engine = DataRetrievalEngine(data_sources=data_sources)
         orchestrator.register_module("data_retrieval", data_engine)
         logger.info("Data Retrieval engine initialized.")
     except Exception as e:
@@ -81,11 +86,13 @@ def initialize_modules(orchestrator, config):
 
     try:
         # WhiteRabbit AI API
-        white_rabbit = WhiteRabbitAI(config=config)
+        white_rabbit_api_key = config["white_rabbit_api_key"]
+        white_rabbit = WhiteRabbitAI(api_key=white_rabbit_api_key)
         orchestrator.register_module("white_rabbit_ai", white_rabbit)
         logger.info("WhiteRabbit AI integration initialized.")
     except Exception as e:
         logger.error(f"Error initializing WhiteRabbit AI API: {e}", exc_info=True)
+
 
 def start_s3_service():
     """
