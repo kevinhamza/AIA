@@ -47,7 +47,7 @@ class FaceDetection:
                         f"Failed to load face encoding for {filename}: {e}"
                     )
 
-    def detect_and_identify(self, video_source="ka.mp4"):
+    def detect_and_identify(self, video_source=0):
         """
         Perform real-time face detection and identification.
         :param video_source: Video source (0 for webcam, or path to video file).
