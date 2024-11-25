@@ -44,7 +44,7 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
 4. Install dependencies(if requirement.txt gives error):
     ```bash
     pip install --use-deprecated=legacy-resolver -r requirements.txt
-    or
+    # or
     pip install --use-feature=2020-resolver -r requirements.txt
     ```
 
@@ -71,9 +71,14 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
     sudo apt-get install alsa-utils pulseaudio
     python main.py 2>/dev/null
     sudo alsactl init
+    # or
+    sudo nano /etc/asound.conf
+    # add this in file
+    defaults.pcm.card 1
+   defaults.ctl.card 1
     ```
 
-8. Run the assistant:
+9. Run the assistant:
     ```bash
     python main.py
     ```
