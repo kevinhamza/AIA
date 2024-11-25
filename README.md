@@ -62,8 +62,16 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
     sudo apt-get update
    sudo apt-get install espeak
     ```
+7. Run the following command (if you using Linux and get audio error) :
+    ```bash
+    sudo apt-get update
+    sudo apt-get install alsa-base alsa-utils
+    SDL_AUDIODRIVER=dummy python main.py
+    export SDL_AUDIODRIVER=dummy
+    sudo alsactl init
+    ```
 
-7. Run the assistant:
+8. Run the assistant:
     ```bash
     python main.py
     ```
