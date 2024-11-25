@@ -26,7 +26,7 @@ class Orchestrator:
         self.device_control = DeviceControl(config)
         self.social_media_manager = SocialMediaManager(config=config)
         self.chatbot = ChatBot(config)
-        self.ml = ModelManager(model_type=config.MODEL_TYPE)
+        self.ml = ModelManager(model_type=config.get_model_config("default_model_type"))
         self.error_handler = ErrorLogger(log_directory="logs")
 
         # Register modules
