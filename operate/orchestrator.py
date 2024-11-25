@@ -15,6 +15,7 @@ class Orchestrator:
     Orchestrates various AI modules and system operations, combining voice recognition,
     task automation, device control, social media interactions, and error handling.
     """
+
     def __init__(self, config):
         self.config = config
         self.logger = logging.getLogger("Orchestrator")
@@ -22,15 +23,14 @@ class Orchestrator:
         # Initialize modules
         self.voice_assistant = VoiceAssistant(config)
         self.internet_tasks = InternetTasks(config)
-        self.device_control = DeviceControl(config)  # Pass config if required
+        self.device_control = DeviceControl(config)
         self.social_media_manager = SocialMediaManager(config=config)
-        self.chatbot = ChatBot(config)  # Pass config if required
-        model_type = config.model_type  # or whichever field holds the model type
-        self.ml = ModelManager(model_type=model_type)
-        self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
+        self.chatbot = ChatBot(config)
+        self.ml = ModelManager(model_type=config.MODEL_TYPE)
+        self.error_handler = ErrorLogger(log_directory="logs")
 
         # Register modules
-        self.modules = {}  # Store modules in a dictionary
+        self.modules = {}
         self.register_module("voice_assistant", self.voice_assistant)
         self.register_module("internet_tasks", self.internet_tasks)
         self.register_module("device_control", self.device_control)
@@ -114,14 +114,18 @@ class Orchestrator:
         Shutdown the orchestrator and clean up resources.
         """
         self.logger.info("Shutting down orchestrator...")
-        self.voice_assistant.stop_listening()
-        self.device_control.shutdown_system()
-        self.logger.info("Orchestrator shut down successfully.")
+        try:
+            self.voice_assistant.stop_listening()
+            self.device_control.shutdown_system()
+        except Exception as e:
+            self.logger.error(f"Error during shutdown: {e}")
+        finally:
+            self.logger.info("Orchestrator shut down successfully.")
 
 
-# Example usage:
+# Example usage
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     config = Config()
     orchestrator = Orchestrator(config)
 
