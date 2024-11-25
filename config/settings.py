@@ -9,14 +9,13 @@ class Config:
     A class to store all configuration settings for the project.
     """
 
-    model_type = 'random_forest'  # or another supported type
-
     # General Settings
     APP_NAME = "AIA - All-In-One Assistant"
-    DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"
-    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+    DEBUG_MODE = os.getenv("DEBUG_MODE", "False").strip().lower() == "true"
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
-    # OpenAI API
+    # AI & Machine Learning Settings
+    MODEL_TYPE = os.getenv("MODEL_TYPE", "random_forest")
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
     OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4")
 
@@ -34,17 +33,15 @@ class Config:
     # File Handling
     TEMP_DIRECTORY = os.getenv("TEMP_DIRECTORY", "./temp")
     UPLOAD_DIRECTORY = os.getenv("UPLOAD_DIRECTORY", "./uploads")
-
-    # Ensure directories exist
     os.makedirs(TEMP_DIRECTORY, exist_ok=True)
     os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 
     # Social Media Configurations
-    SOCIAL_MEDIA_ENABLED = os.getenv("SOCIAL_MEDIA_ENABLED", "False").lower() == "true"
+    SOCIAL_MEDIA_ENABLED = os.getenv("SOCIAL_MEDIA_ENABLED", "False").strip().lower() == "true"
     ALLOWED_SOCIAL_PLATFORMS = os.getenv("ALLOWED_SOCIAL_PLATFORMS", "twitter,facebook,instagram").split(",")
 
     # Network Settings
-    PROXY_ENABLED = os.getenv("PROXY_ENABLED", "False").lower() == "true"
+    PROXY_ENABLED = os.getenv("PROXY_ENABLED", "False").strip().lower() == "true"
     PROXY_URL = os.getenv("PROXY_URL", "")
     TIMEOUT_SECONDS = int(os.getenv("TIMEOUT_SECONDS", "30"))
 
@@ -55,11 +52,11 @@ class Config:
     # User Interface
     UI_THEME = os.getenv("UI_THEME", "dark")
     UI_LANGUAGE = os.getenv("UI_LANGUAGE", "en")
-    UI_FONT_SIZE = int(os.getenv("UI_FONT_SIZE", "12"))  # Font size for UI elements
-    UI_COLOR_SCHEME = os.getenv("UI_COLOR_SCHEME", "blue")  # Color scheme for the UI
+    UI_FONT_SIZE = int(os.getenv("UI_FONT_SIZE", "12"))
+    UI_COLOR_SCHEME = os.getenv("UI_COLOR_SCHEME", "blue")
 
     # IoT Device Control
-    IOT_ENABLED = os.getenv("IOT_ENABLED", "False").lower() == "true"
+    IOT_ENABLED = os.getenv("IOT_ENABLED", "False").strip().lower() == "true"
     IOT_DEVICES = os.getenv("IOT_DEVICES", "smart_light,thermostat").split(",")
 
     # Logging Configuration
@@ -68,15 +65,15 @@ class Config:
     LOG_BACKUP_COUNT = int(os.getenv("LOG_BACKUP_COUNT", "3"))
 
     # Notification Settings
-    NOTIFICATION_ENABLED = os.getenv("NOTIFICATION_ENABLED", "True").lower() == "true"
-    NOTIFICATION_CHANNELS = os.getenv("NOTIFICATION_CHANNELS", "email,sms").split(",")  # Channels for notifications
+    NOTIFICATION_ENABLED = os.getenv("NOTIFICATION_ENABLED", "True").strip().lower() == "true"
+    NOTIFICATION_CHANNELS = os.getenv("NOTIFICATION_CHANNELS", "email,sms").split(",")
 
     # API Rate Limiting
-    API_RATE_LIMIT = int(os.getenv("API_RATE_LIMIT", "100"))  # Max API calls per minute
+    API_RATE_LIMIT = int(os.getenv("API_RATE_LIMIT", "100"))
 
     # Database Settings
-    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")  # Default to SQLite
-    DATABASE_POOL_SIZE = int(os.getenv("DATABASE_POOL_SIZE", "5"))  # Connection pool size
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database.db")
+    DATABASE_POOL_SIZE = int(os.getenv("DATABASE_POOL_SIZE", "5"))
 
     @staticmethod
     def get(key, default_value=None):
@@ -88,12 +85,12 @@ class Config:
 
 def load_config():
     """
-    Returns the Settings class with all configurations.
+    Returns the Config class with all configurations.
     """
     return Config
 
 
-# Example usage
+# Example usage for debugging
 if __name__ == "__main__":
     config = load_config()
     print(f"App Name: {config.APP_NAME}")
@@ -102,3 +99,4 @@ if __name__ == "__main__":
     print(f"OpenAI API Key: {config.OPENAI_API_KEY}")
     print(f"Social Media Enabled: {config.SOCIAL_MEDIA_ENABLED}")
     print(f"Allowed Platforms: {config.ALLOWED_SOCIAL_PLATFORMS}")
+    print(f"Temp Directory: {config.TEMP_DIRECTORY}")
