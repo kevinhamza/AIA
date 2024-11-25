@@ -15,22 +15,22 @@ class Orchestrator:
     Orchestrates various AI modules and system operations, combining voice recognition,
     task automation, device control, social media interactions, and error handling.
     """
-        def __init__(self, config):
+    def __init__(self, config):
         self.config = config
-        self.social_media_manager = SocialMediaManager(config=self.config)
+        self.logger = logging.getLogger("Orchestrator")
 
         # Initialize modules
-        self.modules = {}  # Store modules in a dictionary
         self.voice_assistant = VoiceAssistant(config)
         self.internet_tasks = InternetTasks(config)
-        self.device_control = DeviceControl()
-        self.social_media_manager = SocialMediaManager()
-        self.chatbot = ChatBot()
+        self.device_control = DeviceControl(config)  # Pass config if required
+        self.social_media_manager = SocialMediaManager(config=config)
+        self.chatbot = ChatBot(config)  # Pass config if required
         model_type = config.model_type  # or whichever field holds the model type
         self.ml = ModelManager(model_type=model_type)
         self.error_handler = ErrorLogger(log_directory="logs")  # Initialize the ErrorLogger
 
         # Register modules
+        self.modules = {}  # Store modules in a dictionary
         self.register_module("voice_assistant", self.voice_assistant)
         self.register_module("internet_tasks", self.internet_tasks)
         self.register_module("device_control", self.device_control)
