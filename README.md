@@ -68,6 +68,8 @@ AIA is a comprehensive, open-source AI-powered assistant system that integrates 
     sudo apt-get install alsa-base alsa-utils
     SDL_AUDIODRIVER=dummy python main.py
     export SDL_AUDIODRIVER=dummy
+    sudo apt-get install alsa-utils pulseaudio
+    python main.py 2>/dev/null
     sudo alsactl init
     ```
 
