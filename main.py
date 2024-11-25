@@ -65,7 +65,7 @@ def initialize_modules(orchestrator, config):
     
     try:
         # Face Recognition Module
-        face_recognition = FaceRecognition(config=config)
+        face_recognition = FaceRecognitionSystem(config=config)
         orchestrator.register_module("face_recognition", face_recognition)
         logger.info("Face Recognition module initialized.")
     except Exception as e:
