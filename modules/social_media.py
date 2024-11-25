@@ -4,9 +4,10 @@ import json
 from config.social_media_keys import SocialMediaKeys
 
 class SocialMediaManager:
-    def __init__(self, config=None):
+    def __init__(self, config):
         # Ensure config is passed and has necessary attributes, fallback to hardcoded keys if no config is provided
-        self.config = config if config else {}
+        self.config = config
+        self.twitter_api_key = self.config.get("OPENAI_API_KEY", "default_twitter_api_key")
 
         # Access Twitter and Facebook API keys from the config or fallback to default values
         self.twitter_api_key = self.config.get("twitter", {}).get("api_key", "default_twitter_api_key")
