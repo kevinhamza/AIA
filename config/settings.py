@@ -79,7 +79,7 @@ class Config:
     DATABASE_POOL_SIZE = int(os.getenv("DATABASE_POOL_SIZE", "5"))  # Connection pool size
 
     @staticmethod
-    def get_setting(key, default_value=None):
+    def get(key, default_value=None):
         """
         Utility method to fetch a configuration setting dynamically.
         """
