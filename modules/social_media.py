@@ -1,35 +1,35 @@
+from config.social_media_keys import SocialMediaKeys
 import os
 import requests
 import json
-from config.social_media_keys import SocialMediaKeys
+
 
 class SocialMediaManager:
     def __init__(self, config):
-        # Ensure config is passed and has necessary attributes, fallback to hardcoded keys if no config is provided
+        # Ensure config is passed and use proper methods to access keys
         self.config = config
-        self.twitter_api_key = self.config.get("OPENAI_API_KEY", "default_twitter_api_key")
 
-        # Access Twitter and Facebook API keys from the config or fallback to default values
-        self.twitter_api_key = self.config.get("twitter", {}).get("api_key", "default_twitter_api_key")
-        self.facebook_api_key = self.config.get("facebook", {}).get("access_token", "default_facebook_access_token")
-        
+        # Access Twitter and Facebook API keys using methods from Config
+        self.twitter_api_key = self.config.get_api_key("twitter_api_key")
+        self.facebook_api_key = self.config.get_api_key("facebook_api_key")
+
     def post_to_twitter(self, message):
-        url = f"https://api.twitter.com/2/tweets"
+        url = "https://api.twitter.com/2/tweets"
         headers = {
             "Authorization": f"Bearer {self.twitter_api_key}",
             "Content-Type": "application/json"
         }
         payload = {
-            "status": message
+            "text": message
         }
         response = requests.post(url, headers=headers, data=json.dumps(payload))
         if response.status_code == 201:
             print("Successfully posted to Twitter!")
         else:
-            print(f"Error posting to Twitter: {response.status_code}")
+            print(f"Error posting to Twitter: {response.status_code} - {response.text}")
 
     def post_to_facebook(self, message):
-        url = f"https://graph.facebook.com/v10.0/me/feed"
+        url = "https://graph.facebook.com/v10.0/me/feed"
         headers = {
             "Authorization": f"Bearer {self.facebook_api_key}",
             "Content-Type": "application/json"
@@ -41,11 +41,11 @@ class SocialMediaManager:
         if response.status_code == 200:
             print("Successfully posted to Facebook!")
         else:
-            print(f"Error posting to Facebook: {response.status_code}")
+            print(f"Error posting to Facebook: {response.status_code} - {response.text}")
 
     def get_latest_posts(self, platform="twitter"):
         if platform == "twitter":
-            url = f"https://api.twitter.com/2/tweets"
+            url = "https://api.twitter.com/2/tweets"
             headers = {
                 "Authorization": f"Bearer {self.twitter_api_key}"
             }
@@ -53,9 +53,9 @@ class SocialMediaManager:
             if response.status_code == 200:
                 print("Latest posts from Twitter:", response.json())
             else:
-                print(f"Error fetching posts from Twitter: {response.status_code}")
+                print(f"Error fetching posts from Twitter: {response.status_code} - {response.text}")
         elif platform == "facebook":
-            url = f"https://graph.facebook.com/v10.0/me/feed"
+            url = "https://graph.facebook.com/v10.0/me/feed"
             headers = {
                 "Authorization": f"Bearer {self.facebook_api_key}"
             }
@@ -63,15 +63,17 @@ class SocialMediaManager:
             if response.status_code == 200:
                 print("Latest posts from Facebook:", response.json())
             else:
-                print(f"Error fetching posts from Facebook: {response.status_code}")
+                print(f"Error fetching posts from Facebook: {response.status_code} - {response.text}")
         else:
             print("Invalid platform specified.")
 
 if __name__ == "__main__":
-    # Example of initializing with a config
-    smm = SocialMediaManager(config={
-        "twitter": {"api_key": "your_twitter_api_key"},
-        "facebook": {"access_token": "your_facebook_access_token"}
-    })
+    from config.settings import Config
+
+    # Example of initializing with the Config object
+    config = Config()
+    smm = SocialMediaManager(config=config)
+
+    # Example usage
     smm.post_to_twitter("Hello from my assistant!")
     smm.get_latest_posts("twitter")
