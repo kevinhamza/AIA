@@ -9,7 +9,6 @@ from modules.machine_learning import ModelManager
 from modules.error_handling import ErrorLogger
 from config.settings import Config
 
-
 class Orchestrator:
     """
     Orchestrates various AI modules and system operations, combining voice recognition,
@@ -26,7 +25,7 @@ class Orchestrator:
         self.device_control = DeviceControl(config)
         self.social_media_manager = SocialMediaManager(config=config)
         self.chatbot = ChatBot(config)
-        self.ml = ModelManager(model_type=config.get_model_config("default_model_type"))
+        self.ml = ModelManager(model_type=self.config.get_model_config("MODEL_TYPE"))  # Pass the key name
         self.error_handler = ErrorLogger(log_directory="logs")
 
         # Register modules
@@ -122,14 +121,24 @@ class Orchestrator:
         finally:
             self.logger.info("Orchestrator shut down successfully.")
 
-
+    def handle_command(self, command: str):
+        """
+        Handle a command input from the user.
+        This method can be expanded to include various commands.
+        """
+        if command.lower() == "detect face":
+            # Call the face detection functionality
+            return self.execute_task("face_detection", {})
+        elif command.lower() == "recognize person":
+            # Call the recognition functionality
+            return self.execute_task("face_recognition", {})
+        # Add more commands as needed
+        else:
+            return "Command not recognized."
+        
 # Example usage
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     config = Config()
     orchestrator = Orchestrator(config)
-
-    try:
-        orchestrator.run()
-    except KeyboardInterrupt:
-        orchestrator.shutdown()
+    orchestrator.run()
