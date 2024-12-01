@@ -55,7 +55,7 @@ class Config:
     UI_FONT_SIZE = int(os.getenv("UI_FONT_SIZE", "12"))
     UI_COLOR_SCHEME = os.getenv("UI_COLOR_SCHEME", "blue")
 
-    # IoT Device Control
+    # Io T Device Control
     IOT_ENABLED = os.getenv("IOT_ENABLED", "False").strip().lower() == "true"
     IOT_DEVICES = os.getenv("IOT_DEVICES", "smart_light,thermostat").split(",")
 
@@ -82,17 +82,44 @@ class Config:
         """
         return getattr(Config, key, default_value)
 
+    @staticmethod
+    def get_api_key(key_name: str) -> str:
+        """Retrieve a specific API key."""
+        return os.getenv(key_name, '')
 
-def load_config():
-    """
-    Returns the Config class with all configurations.
-    """
-    return Config
+    # @staticmethod
+    # def get_model_config() -> str:
+    #     """Retrieve the model configuration."""
+    #     return Config.MODEL_TYPE
 
+    @staticmethod
+    def get_model_config(key_name: str) -> str:
+        """Retrieve a specific model configuration."""
+        if key_name == "MODEL_TYPE":
+            return Config.MODEL_TYPE
+        # Add more model configuration retrieval as needed
+        return ''
+
+    def validate(self):
+        """Validate required configuration settings."""
+        if not self.OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY must be set in the environment.")
+        # Add more validations as needed
+
+    @staticmethod
+    def load_config() -> 'Config':
+        """
+        Returns the Config class with all configurations.
+        """
+        config = Config()
+        config.validate()  # Validate configuration
+        return config
+    
 
 # Example usage for debugging
 if __name__ == "__main__":
-    config = load_config()
+    # config = load_config()
+    config = Config.load_config()  # Use the static method
     print(f"App Name: {config.APP_NAME}")
     print(f"Debug Mode: {config.DEBUG_MODE}")
     print(f"Log Level: {config.LOG_LEVEL}")
@@ -100,3 +127,4 @@ if __name__ == "__main__":
     print(f"Social Media Enabled: {config.SOCIAL_MEDIA_ENABLED}")
     print(f"Allowed Platforms: {config.ALLOWED_SOCIAL_PLATFORMS}")
     print(f"Temp Directory: {config.TEMP_DIRECTORY}")
+    print(f"Model Type: {config.get_model_config()}")
