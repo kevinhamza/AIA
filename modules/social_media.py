@@ -1,8 +1,7 @@
-from config.social_media_keys import SocialMediaKeys
 import os
 import requests
 import json
-
+from config.settings import Config  # Ensure you import the Config class
 
 class SocialMediaManager:
     def __init__(self, config):
@@ -10,8 +9,8 @@ class SocialMediaManager:
         self.config = config
 
         # Access Twitter and Facebook API keys using methods from Config
-        self.twitter_api_key = self.config.get_api_key("twitter_api_key")
-        self.facebook_api_key = self.config.get_api_key("facebook_api_key")
+        self.twitter_api_key = self.config.get_api_key("TWITTER_API_KEY")
+        self.facebook_api_key = self.config.get_api_key("FACEBOOK_API_KEY")
 
     def post_to_twitter(self, message):
         url = "https://api.twitter.com/2/tweets"
@@ -22,7 +21,7 @@ class SocialMediaManager:
         payload = {
             "text": message
         }
-        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 201:
             print("Successfully posted to Twitter!")
         else:
@@ -37,7 +36,7 @@ class SocialMediaManager:
         payload = {
             "message": message
         }
-        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response = requests.post(url, headers=headers, json=payload)
         if response.status_code == 200:
             print("Successfully posted to Facebook!")
         else:
@@ -68,12 +67,13 @@ class SocialMediaManager:
             print("Invalid platform specified.")
 
 if __name__ == "__main__":
-    from config.settings import Config
+    from config.settings import load_config
 
     # Example of initializing with the Config object
-    config = Config()
+    config = load_config()
     smm = SocialMediaManager(config=config)
 
     # Example usage
     smm.post_to_twitter("Hello from my assistant!")
     smm.get_latest_posts("twitter")
+    
